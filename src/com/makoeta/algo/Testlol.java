@@ -6,6 +6,6 @@ public class Testlol {
         System.out.println("Set and commit.");
         System.out.println();
         System.out.println("Noch eine Zeile.");
-        System.out.println("Noch eine Zeile, lol.");
+        System.out.println("Noch eine Zeile, lmao.");
     }
 }
