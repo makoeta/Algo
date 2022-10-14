@@ -7,5 +7,6 @@ public class Testlol {
         System.out.println();
         System.out.println("Noch eine Zeile.");
         System.out.println("Noch eine Zeile, lmao.");
+        System.out.println("hallo");
     }
 }
