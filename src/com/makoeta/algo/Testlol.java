@@ -4,7 +4,7 @@ public class Testlol {
 
     public static void main(String[] args) {
         System.out.println("Set and commit.");
-        System.out.println("Ich war schneller als Jonas!");
+        System.out.println("Ich war schneller als Tobi!");
         System.out.println("Noch eine Zeile.");
         System.out.println("Noch eine Zeile, lmao.");
         System.out.println("hallo");
