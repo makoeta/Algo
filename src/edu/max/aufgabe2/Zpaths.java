@@ -1,4 +1,4 @@
-package com.makoeta.algo;
+package edu.max.aufgabe2;
 
 import java.math.BigInteger;
 
