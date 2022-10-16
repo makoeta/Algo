@@ -1,31 +1,45 @@
 package edu.max.aufgabe2;
 
 import java.math.BigInteger;
+import java.util.Scanner;
 
+
+/**
+ *
+ * @author Maximilian Koenig, Jonas Gierlich, Tobias Bergtold
+ */
 public class Zpaths {
 
     public static void main(String[] args) {
 
-        algoAb(0);
-
-        for (int i = 0; i < 100; i++) {
-            System.out.println("a (" + i + ") = " + algoAb(i) + " (AB-Algo) | " + algoA(i) + " (A-Algo)");
+        if (args.length != 0) {
+            for (String s:
+                 args) {
+                try {
+                    System.out.println("a(" + s + ") = " + algoAb(Integer.parseInt(s)));
+                } catch (Exception e) {
+                    System.out.println("Ungültiger Input für \"" + s + "\".");
+                }
+            }
+            System.exit(0);
         }
 
-
-        /*while(true) {
-            int input;
+        while (true) {
+            int inputInt;
             try {
                 Scanner sc = new Scanner(System.in);
                 System.out.print("Eingabe: ");
-                input = sc.nextInt();
-                if(input < 0) throw new Exception();
+                String input = sc.next();
+                if (input.equalsIgnoreCase("stop")) System.exit(0);
+                inputInt = Integer.parseInt(input);
+                if (inputInt < 0) throw new Exception();
             } catch (Exception e) {
-                System.out.println("Bitte eine positive Ganzzahl eingeben.");
+                System.out.println("Bitte eine positive Ganzzahl eingeben. (Stop um zu beenden)");
                 continue;
             }
-            algoA(input);
-        }*/
+
+            System.out.println("a(" + inputInt + ") = " + algoAb(inputInt));
+        }
     }
 
 
@@ -33,7 +47,7 @@ public class Zpaths {
      * Algorithmus für zPaths
      * @param n Konstante
      */
-    static BigInteger algoA(int n) {
+    public static BigInteger algoA(int n) {
 
         /*
         Anzahl der Generationen errechnen. Jede Generation ist im Bereich von g(x)= -x + Generation
@@ -58,8 +72,8 @@ public class Zpaths {
 
         BigInteger[][] gitterPfade = new BigInteger[(int) anzahlGen + 1][(int) anzahlGen + 1];
 
-        for (int i = 0; i < anzahlGen+1; i++) {
-            for(int j = 0; j < anzahlGen+1; j++) {
+        for (int i = 0; i < anzahlGen + 1; i++) {
+            for(int j = 0; j < anzahlGen + 1; j++) {
                 gitterPfade[i][j] = BigInteger.ZERO;
             }
         }
@@ -103,7 +117,7 @@ public class Zpaths {
      * Zweiter Algorithmus mit Speicheroptimierung
      * @param n Konstante
      */
-    static BigInteger algoAb(int n) {
+    public static BigInteger algoAb(int n) {
         if (n == 0) return BigInteger.ONE; // Ausnahmefall
 
         float anzahlGen = (int) ((2f/3f)*n);
