@@ -6,7 +6,7 @@ public class Zpaths {
 
     public static void main(String[] args) {
 
-        algoAb(15);
+        algoAb(18);
         /*while(true) {
             int input;
             try {
@@ -96,8 +96,8 @@ public class Zpaths {
     }
 
     /**
-     * Zweiter Algorithmus
-     * @param n
+     * Zweiter Algorithmus mit Speicheroptimierung
+     * @param n Unbekannte
      */
     static void algoAb(int n) {
         float anzahlGen = (int) ((2f/3f)*n);
@@ -105,25 +105,44 @@ public class Zpaths {
         BigInteger[] gen = {BigInteger.ONE, BigInteger.ONE};
         BigInteger[] nextGen;
 
-        for (int genCount = 3; genCount < anzahlGen; genCount++) { // Bei 2 Starten, da gen bereits befüllt ist
+        // Koordinaten des nächsten Punktes
+        long x = (long) (n*(1d/2d));
+        int y = n % 2 == 0 ? 0 : 1;
+
+        int genWithPoint = n % 2 == 0 ? n/2 : (n/2) + 1;
+
+        BigInteger paths = BigInteger.ZERO;
+
+        for (int genCount = 3; genCount <= anzahlGen; genCount++) { // Bei 2 Starten, da gen bereits befüllt ist
             //Anzahl der Elemente der nächsten Generation bestimmen
-            nextGen = new BigInteger[genCount % 2 == 0 ? (genCount/2) + 1 : ((genCount-1)/2) + 1]; // FEHLER BEI ANZAHL DER GENERATIONEN
+            nextGen = new BigInteger[genCount % 2 == 0 ? (genCount/2) + 1 : ((genCount-1)/2) + 1];
 
             nextGen[0] = BigInteger.ONE; //unterstes Element ist immer 1
             for (int i = 1; i < nextGen.length-1; i++) { // nächste Generation errechnen
                 nextGen[i] = gen[i-1].add(gen[i]);
             }
             nextGen[nextGen.length - 1] =
-                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]);
+                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]); // Oben
 
             gen = nextGen.clone();
 
-            System.out.print(genCount + ". Generation: ");
+
+            if (genWithPoint == genCount) { // Hier Bereich wo Generationen Punkte beinhalten
+                System.out.println("Hit in Gen = " + genWithPoint + "; an y = " + y);
+                paths = paths.add(gen[y]);
+                y += 2;
+                genWithPoint++;
+            }
+
+
+
+            /*System.out.println(genCount + ". Generation: ");
             for (BigInteger b:
                  gen) {
                 System.out.print(b + " ");
             }
-            System.out.println();
+            System.out.println();*/
         }
+        System.out.println("Pfade: " + paths);
     }
 }
