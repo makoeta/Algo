@@ -47,6 +47,7 @@ public class Zpaths {
          Der Faktor von 2/3 ist nötig, da dieser (abgerundet) die niedrigste Anzahl an Generationen in
          Verhältnis zu n wieder gibt. 2/3 ist das Verhältnis, welches sich aus der Gleichung n = 2i + j ergibt.
          */
+
         float anzahlGen = (int) ((2f/3f)*n);
 
         BigInteger[][] gitterPfade = new BigInteger[(int) anzahlGen + 1][(int) anzahlGen + 1];
@@ -94,29 +95,32 @@ public class Zpaths {
         System.out.println("a(" + n + ") = " + gesamtPfade);
     }
 
+    /**
+     * Zweiter Algorithmus
+     * @param n
+     */
     static void algoAb(int n) {
         float anzahlGen = (int) ((2f/3f)*n);
 
-        BigInteger[] gitterPfade = {BigInteger.ONE};
-        BigInteger[] temp;
+        BigInteger[] gen = {BigInteger.ONE, BigInteger.ONE};
+        BigInteger[] nextGen;
 
-        for (int i = 1; i < anzahlGen; i++) {
-            temp = new BigInteger[gitterPfade.length];
-            if(i % 2 == 0) { // Wenn Generation gerade, dann vergrößern
-                temp = new BigInteger[gitterPfade.length + 1];
+        for (int genCount = 3; genCount < anzahlGen; genCount++) { // Bei 2 Starten, da gen bereits befüllt ist
+            //Anzahl der Elemente der nächsten Generation bestimmen
+            nextGen = new BigInteger[genCount % 2 == 0 ? (genCount/2) + 1 : ((genCount-1)/2) + 1]; // FEHLER BEI ANZAHL DER GENERATIONEN
+
+            nextGen[0] = BigInteger.ONE; //unterstes Element ist immer 1
+            for (int i = 1; i < nextGen.length-1; i++) { // nächste Generation errechnen
+                nextGen[i] = gen[i-1].add(gen[i]);
             }
+            nextGen[nextGen.length - 1] =
+                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]);
 
-            for(int j = 0; j < temp.length; j++) {
-                if(j-1 < 0) temp[j] = gitterPfade[j]; // unten
-                else if(j == gitterPfade.length) temp[j] = gitterPfade[gitterPfade.length - 1]; //oben
-                else {
-                    temp[j] = gitterPfade[j].add(gitterPfade[j-1]); // mitte
-                }
-            }
-            gitterPfade = temp.clone();
+            gen = nextGen.clone();
 
+            System.out.print(genCount + ". Generation: ");
             for (BigInteger b:
-                    gitterPfade) {
+                 gen) {
                 System.out.print(b + " ");
             }
             System.out.println();
