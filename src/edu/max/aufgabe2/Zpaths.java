@@ -6,7 +6,13 @@ public class Zpaths {
 
     public static void main(String[] args) {
 
-        algoAb(18);
+        algoAb(0);
+
+        for (int i = 0; i < 100; i++) {
+            System.out.println("a (" + i + ") = " + algoAb(i) + " (AB-Algo) | " + algoA(i) + " (A-Algo)");
+        }
+
+
         /*while(true) {
             int input;
             try {
@@ -25,9 +31,9 @@ public class Zpaths {
 
     /**
      * Algorithmus für zPaths
-     * @param n
+     * @param n Konstante
      */
-    static void algoA(int n) {
+    static BigInteger algoA(int n) {
 
         /*
         Anzahl der Generationen errechnen. Jede Generation ist im Bereich von g(x)= -x + Generation
@@ -87,33 +93,32 @@ public class Zpaths {
             j ++;
         }
         for (int i = n/2; i >= j; i--,j += 2) {
-            System.out.println("Punkt [" + i + "/" + j + "]: " + gitterPfade[i][j]);
             gesamtPfade = gesamtPfade.add(gitterPfade[i][j]);
         }
-        //System.out.println("Für n = " + n + "\nGesamt: " + gesamtPfade + " Pfade");
 
-        System.out.println("a(" + n + ") = " + gesamtPfade);
+        return gesamtPfade;
     }
 
     /**
      * Zweiter Algorithmus mit Speicheroptimierung
-     * @param n Unbekannte
+     * @param n Konstante
      */
-    static void algoAb(int n) {
+    static BigInteger algoAb(int n) {
         float anzahlGen = (int) ((2f/3f)*n);
 
-        BigInteger[] gen = {BigInteger.ONE, BigInteger.ONE};
+        if (n == 0) return BigInteger.ONE; // Ausnahmefall
+
+        BigInteger[] gen = {BigInteger.ONE};
         BigInteger[] nextGen;
 
-        // Koordinaten des nächsten Punktes
-        long x = (long) (n*(1d/2d));
+        // Koordinate des nächsten Punktes
         int y = n % 2 == 0 ? 0 : 1;
 
-        int genWithPoint = n % 2 == 0 ? n/2 : (n/2) + 1;
+        int genWithPoint = n % 2 == 0 ? n/2 : (n/2) + 1; // "x" in welcher Generation? = x
 
         BigInteger paths = BigInteger.ZERO;
 
-        for (int genCount = 3; genCount <= anzahlGen; genCount++) { // Bei 2 Starten, da gen bereits befüllt ist
+        for (int genCount = 1; genCount <= anzahlGen; genCount++) { // Bei 2 Starten, da gen bereits befüllt ist
             //Anzahl der Elemente der nächsten Generation bestimmen
             nextGen = new BigInteger[genCount % 2 == 0 ? (genCount/2) + 1 : ((genCount-1)/2) + 1];
 
@@ -121,28 +126,22 @@ public class Zpaths {
             for (int i = 1; i < nextGen.length-1; i++) { // nächste Generation errechnen
                 nextGen[i] = gen[i-1].add(gen[i]);
             }
+           /* nextGen[nextGen.length - 1] =
+                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]);*/ // Oben
+
             nextGen[nextGen.length - 1] =
-                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]); // Oben
+                    genCount % 2 == 0 ? gen[gen.length - 1] : gen.length < 2 ? gen[gen.length - 1] :
+                            gen[gen.length - 1].add(gen[gen.length - 2]); // Länge der nächsten Generation bestimmen
 
             gen = nextGen.clone();
 
 
             if (genWithPoint == genCount) { // Hier Bereich wo Generationen Punkte beinhalten
-                System.out.println("Hit in Gen = " + genWithPoint + "; an y = " + y);
                 paths = paths.add(gen[y]);
                 y += 2;
                 genWithPoint++;
             }
-
-
-
-            /*System.out.println(genCount + ". Generation: ");
-            for (BigInteger b:
-                 gen) {
-                System.out.print(b + " ");
-            }
-            System.out.println();*/
         }
-        System.out.println("Pfade: " + paths);
+        return paths;
     }
 }
