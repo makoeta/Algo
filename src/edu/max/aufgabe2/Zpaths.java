@@ -104,9 +104,9 @@ public class Zpaths {
      * @param n Konstante
      */
     static BigInteger algoAb(int n) {
-        float anzahlGen = (int) ((2f/3f)*n);
-
         if (n == 0) return BigInteger.ONE; // Ausnahmefall
+
+        float anzahlGen = (int) ((2f/3f)*n);
 
         BigInteger[] gen = {BigInteger.ONE};
         BigInteger[] nextGen;
@@ -126,18 +126,17 @@ public class Zpaths {
             for (int i = 1; i < nextGen.length-1; i++) { // nächste Generation errechnen
                 nextGen[i] = gen[i-1].add(gen[i]);
             }
-           /* nextGen[nextGen.length - 1] =
-                    genCount % 2 == 0 ? gen[gen.length - 1] : gen[gen.length - 1].add(gen[gen.length - 2]);*/ // Oben
 
             nextGen[nextGen.length - 1] =
                     genCount % 2 == 0 ? gen[gen.length - 1] : gen.length < 2 ? gen[gen.length - 1] :
-                            gen[gen.length - 1].add(gen[gen.length - 2]); // Länge der nächsten Generation bestimmen
+                            gen[gen.length - 1].add(gen[gen.length - 2]); // Oberster Punkt
 
             gen = nextGen.clone();
 
 
-            if (genWithPoint == genCount) { // Hier Bereich wo Generationen Punkte beinhalten
-                paths = paths.add(gen[y]);
+            if (genWithPoint == genCount) { // Hier Bereich wo eine Generation einen Punkt beinhaltet
+                paths = paths.add(gen[y]); // Punkt in aktueller Generation finden
+                // nächster Punkt anpeilen
                 y += 2;
                 genWithPoint++;
             }
