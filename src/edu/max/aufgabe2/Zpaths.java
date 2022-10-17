@@ -5,8 +5,8 @@ import java.util.Scanner;
 
 
 /**
- *
- * @author Maximilian Koenig, Jonas Gierlich, Tobias Bergtold
+ * Programm für Übungsaufgabe Z-Paths
+ * @author Maximilian Koenig, Jonas Gierlich, Tobias Bergtold, Nicolas Holl, Jannik Döring
  */
 public class Zpaths {
 
@@ -107,8 +107,8 @@ public class Zpaths {
 
         BigInteger gesamtPfade = BigInteger.ZERO;
         int j = 0;
-        if (n%2 != 0) { // Berechnung des Punktes der am nächsten zur x-Achse liegt
-            j ++;
+        if (n % 2 != 0) { // Berechnung des Punktes der am nächsten zur x-Achse liegt
+            j++;
         }
         for (int i = n/2; i >= j; i--, j += 2) {
             gesamtPfade = gesamtPfade.add(gitterPfade[i][j]);
@@ -131,8 +131,7 @@ public class Zpaths {
 
         // Koordinate des nächsten Punktes
         int y = n % 2 == 0 ? 0 : 1;
-
-        int x = n % 2 == 0 ? n/2 : (n/2) + 1; // "x" in welcher Generation? = x
+        int hit = n % 2 == 0 ? n/2 : (n/2) + 1; // "x" in welcher Generation? = x
 
         BigInteger paths = BigInteger.ZERO;
 
@@ -152,11 +151,11 @@ public class Zpaths {
             gen = nextGen.clone();
 
 
-            if (x == genCount) { // Hier Bereich wo eine Generation einen Punkt beinhaltet
+            if (hit == genCount) { // Hier Bereich wo eine Generation einen Punkt beinhaltet
                 paths = paths.add(gen[y]); // Punkt in aktueller Generation finden
                 // nächster Punkt anpeilen
                 y += 2;
-                x++;
+                hit++;
             }
         }
         return paths;
