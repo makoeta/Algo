@@ -128,7 +128,7 @@ public class Zpaths {
         // Koordinate des nächsten Punktes
         int y = n % 2 == 0 ? 0 : 1;
 
-        int genWithPoint = n % 2 == 0 ? n/2 : (n/2) + 1; // "x" in welcher Generation? = x
+        int x = n % 2 == 0 ? n/2 : (n/2) + 1; // "x" in welcher Generation? = x
 
         BigInteger paths = BigInteger.ZERO;
 
@@ -148,11 +148,11 @@ public class Zpaths {
             gen = nextGen.clone();
 
 
-            if (genWithPoint == genCount) { // Hier Bereich wo eine Generation einen Punkt beinhaltet
+            if (x == genCount) { // Hier Bereich wo eine Generation einen Punkt beinhaltet
                 paths = paths.add(gen[y]); // Punkt in aktueller Generation finden
                 // nächster Punkt anpeilen
                 y += 2;
-                genWithPoint++;
+                x++;
             }
         }
         return paths;
