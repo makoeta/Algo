@@ -30,9 +30,13 @@ public class Zpaths {
                 Scanner sc = new Scanner(System.in);
                 System.out.print("Eingabe: ");
                 String input = sc.next();
-                if (input.equalsIgnoreCase("stop")) System.exit(0);
+                if (input.equalsIgnoreCase("stop")) {
+                    System.exit(0);
+                }
                 inputInt = Integer.parseInt(input);
-                if (inputInt < 0) throw new Exception();
+                if (inputInt < 0) {
+                    throw new Exception();
+                }
             } catch (Exception e) {
                 System.out.println("Bitte eine positive Ganzzahl eingeben. (Stop um zu beenden)");
                 continue;
@@ -88,13 +92,13 @@ public class Zpaths {
             int y = 0;
             // Startpunkt immer bei Nullstelle
 
-            while(y<=i) { //Negative Steigung ablaufen, solange bis x = y Geraden
+            while(y <= i) { //Negative Steigung ablaufen, solange bis x = y Geraden
                 //Erster Schritt -> Nach rechts
                 gitterPfade[x+1][y] = gitterPfade[x+1][y].add(gitterPfade[x][y]);
 
                 //Zweiter Schritt -> nach oben, möglich?
-                if(y+1 <= x) {
-                    gitterPfade[x][y+1] = gitterPfade[x][y+1].add(gitterPfade[x][y]);
+                if(y + 1 <= x) {
+                    gitterPfade[x][y + 1] = gitterPfade[x][y + 1].add(gitterPfade[x][y]);
                 }
                 x--;
                 y++;
@@ -106,7 +110,7 @@ public class Zpaths {
         if (n%2 != 0) { // Berechnung des Punktes der am nächsten zur x-Achse liegt
             j ++;
         }
-        for (int i = n/2; i >= j; i--,j += 2) {
+        for (int i = n/2; i >= j; i--, j += 2) {
             gesamtPfade = gesamtPfade.add(gitterPfade[i][j]);
         }
 
