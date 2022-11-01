@@ -1,5 +1,8 @@
 package edu.max.aufgabe3;
 
+/**
+ * @author Maximilian König
+ */
 public class PermParity {
 
   public static void main(String[] args) {
