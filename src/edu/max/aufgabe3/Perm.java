@@ -13,13 +13,13 @@ public class Perm extends Thread {
     a = new int[n];     // Indices: 0 .. n-1
     max = n - 1;          // Maximaler Index
     for (int i = 0; i <= max;) {
-      a[i] = i++; // a fuellen
+      a[i] = i++ + 1; // a fuellen
     }
     this.start();      // run-Methode beginnt zu laufen
   }
 
-  public void run (){// die Arbeits-Methode
-    perm(1);        // a[0] bleibt fest; permutiere ab 1
+  public void run() {// die Arbeits-Methode
+    perm(0);        // a[0] bleibt fest; permutiere ab 1
     a = null;        // Anzeige, dass fertig
     put();          // ausliefern
     } // end run
@@ -27,10 +27,10 @@ public class Perm extends Thread {
   private void perm (int i){ // permutiere ab Index i
     if (i >= max) put ();  // eine Permutation fertig
       else {
-        for (int j=i; j <= max; j++){ // jedes nach Vorne
+        for (int j=i; j <= max; j++) { // jedes nach Vorne
           swap(i,j);               // vertauschen
           perm(i+1);               // und Rekursion
-          }
+        }
         int h = a[i];                 // restauriere
       System.arraycopy(a,i+1,a,i,max-i); // shift links
       a[max] = h;
