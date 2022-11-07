@@ -22,6 +22,9 @@ public class PermParity {
   static void foo(int n) {
     Perm p = new Perm(n);
     int[] buffer = p.getNext();
+    int count = 0;
+
+
 
     while(buffer != null) {
 
@@ -30,6 +33,7 @@ public class PermParity {
       for (int i = 1; i < buffer.length; i++) {
 
         if (buffer[i] % 2 == 0 && buffer[i] > buffer[i-1]) {
+
           continue;
         }
 
@@ -41,9 +45,13 @@ public class PermParity {
         break;
       }
 
-      if (print) printArr(buffer);
+      if (print) {
+        printArr(buffer);
+        count++;
+      }
       buffer = p.getNext();
     }
+    System.out.println("Es gab genau " + count + " Permutationen in {1,...," + n + "} die der Bedingung gehorchen.");
   }
 
   static void printArr(int[] arr) {
