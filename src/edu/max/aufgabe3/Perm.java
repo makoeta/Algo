@@ -19,7 +19,7 @@ public class Perm extends Thread {
     }
 
     public void run() {// die Arbeits-Methode
-        perm(0);        // a[0] bleibt fest; permutiere ab 1
+        perm(1);        // a[0] bleibt fest; permutiere ab 1
         a = null;        // Anzeige, dass fertig
         put();          // ausliefern
     } // end run
