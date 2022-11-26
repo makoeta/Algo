@@ -6,6 +6,7 @@ public class DLX {
    * DLX head node
    */
   static DLXNode h;
+  static int cnt;
 
   /**
    * search tries to find and count all complete coverings of the DLX matrix.
@@ -16,7 +17,8 @@ public class DLX {
    *
    */
   public static void search (int k){ // finds & counts solutions
-    int cnt = 0;
+    System.out.println(k);
+    cnt = 0;
     if (h.R == h) {cnt++; return;}     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
     cover(c);                          // remove c from columns

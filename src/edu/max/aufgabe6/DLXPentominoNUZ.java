@@ -1,7 +1,5 @@
 package edu.max.aufgabe6;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
 
 public class DLXPentominoNUZ {
 
@@ -21,13 +19,13 @@ public class DLXPentominoNUZ {
 
     n = 5;
 
-    headNodes = new DLXNode[8];
+    headNodes = new DLXNode[3 + n * 5];
 
     /**
      * Matrix-Spalten für Formen:
      * N U Z
      */
-    for (int i = 0; i < 8; i++) { // 3 Spalten für Formen + 8 für Breitde des Spielfeldes
+    for (int i = 0; i < headNodes.length; i++) { // 3 Spalten für Formen + 8 für Breitde des Spielfeldes
       DLXNode headerNode = new DLXNode();
       headNodes[i] = headerNode;
       if (i > 0) {
@@ -42,14 +40,22 @@ public class DLXPentominoNUZ {
       System.out.print("-" + i + "1-" + i + "2-" + i + "3-" + i + "4-" + i + "5");
     }
     System.out.println();
+    addFigureToMatrix(new int[]{1, 3, 8, 9, 14, 19}, n - 1); // N
+    addFigureToMatrix(new int[]{1, 4, 8, 9, 13, 18}, n - 1); // mirrored N
+    addFigureToMatrix(new int[]{1, 4, 9, 13, 14, 18}, n - 1); // flipped N
+    addFigureToMatrix(new int[]{1, 3, 8, 13, 14, 19}, n - 1); // mirrored & flipped N
+
+    addFigureToMatrix(new int[]{0, 3, 5, 8, 9, 10}, n - 1); // U
+    addFigureToMatrix(new int[]{0, 3, 4, 5, 8, 10}, n - 1); // flipped U
 
 
-    addUtoMatrix();
-    addFlippedUtoMatrix();
-    addZtoMatrix();
-    addMirroredZtoMatrix();
 
+    addFigureToMatrix(new int[]{2, 4, 5, 9, 13, 14}, n - 2); // Z
+    addFigureToMatrix(new int[]{2, 3, 4, 9, 14, 15}, n - 2); // mirrored Z
 
+    DLX.h = head;
+    DLX.search(0);
+    System.out.println("Sol.: " + DLX.cnt);
   }
 
   static DLXNode getLowestNode(DLXNode node) {
@@ -71,38 +77,26 @@ public class DLXPentominoNUZ {
     down.U = up;
   }
 
-  static DLXNode makeNewLineStart(DLXNode headNode) {
+  static DLXNode[] makeRNodeList() {
+    DLXNode[] out = new DLXNode[6];
 
-    DLXNode rowBeginn = getLowestNode(headNode);
-    rowBeginn.D = new DLXNode(); // Neue Node für Zeilenbeginn
-    rowBeginn = rowBeginn.D;
-    rowBeginn.C = headNode; //Mit head verbinden
-    connectNodeWithLastInRow(rowBeginn);
-
-    return rowBeginn.D;
-  }
-
-  static DLXNode[] makeRNodeList(int length) {
-    DLXNode[] out = new DLXNode[length];
-
-    for (int i = 0; i < length; i++) {
+    for (int i = 0; i < out.length; i++) {
       out[i] = new DLXNode();
     }
 
-    for (int i = 0; i < length; i++) {
-      verticalConnect(out[ i - 1 < 0 ? length - 1 : i], out[i]);
-    }
+    verticalConnect(out[0], out[1]);
+    verticalConnect(out[1], out[2]);
+    verticalConnect(out[2], out[3]);
+    verticalConnect(out[3], out[4]);
+    verticalConnect(out[4], out[5]);
+    verticalConnect(out[5], out[0]);
 
     return out;
   }
 
+  static void addFigureToMatrix(int[] places, int epl) {
 
-
-  static void addUtoMatrix() {
-
-    int[] places = {0, 3, 5, 8, 9, 10};
-
-    for (int i = 0; i < n - 1; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
+    for (int i = 0; i < epl; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
       for (int k = 0; k < 3; k++) { //immer 3 pro Zeile
         if (k != 0) {
           for (int j = 1; j < places.length; j++) { //Plätze verschieben
@@ -112,9 +106,9 @@ public class DLXPentominoNUZ {
         printMatrixRow(places);
         //System.out.println(Arrays.toString(places));
         // Nodes in matrix
-        DLXNode[] nodes = makeRNodeList(6);
+        DLXNode[] nodes = makeRNodeList();
         for (int x = 0; x < nodes.length; x++) {
-          nodes[x].C = headNodes[x]; // Connect to head
+          nodes[x].C = headNodes[places[x]]; // Connect to head
           connectNodeWithLastInRow(nodes[x]); // Vertical connect
         }
       }
@@ -124,99 +118,13 @@ public class DLXPentominoNUZ {
 
     }
   }
-
-
-  static void addFlippedUtoMatrix() {
-
-    int[] places = {0, 3, 4, 5, 8, 10};
-
-    for (int i = 0; i < n - 1; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
-      for (int k = 0; k < 3; k++) { //immer 3 pro Zeile
-        if (k != 0) {
-          for (int j = 1; j < places.length; j++) { //Plätze verschieben
-            places[j]++;
-          }
-        }
-        printMatrixRow(places);
-        //System.out.println(Arrays.toString(places));
-        // Nodes in matrix
-        DLXNode[] nodes = makeRNodeList(6);
-        for (int x = 0; x < nodes.length; x++) {
-          nodes[x].C = headNodes[x]; // Connect to head
-          connectNodeWithLastInRow(nodes[x]); // Vertical connect
-        }
-      }
-      for (int j = 1; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
-        places[j] = places[j] + 3;
-      }
-
-    }
-  }
-
-
-  static void addZtoMatrix() {
-
-    int[] places = {2, 4, 5, 9, 13, 14};
-
-    for (int i = 0; i < n - 2; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
-      for (int k = 0; k < 3; k++) { //immer 3 pro Zeile
-        if (k != 0) {
-          for (int j = 1; j < places.length; j++) { //Plätze verschieben
-            places[j]++;
-          }
-        }
-        printMatrixRow(places);
-        //System.out.println(Arrays.toString(places));
-        // Nodes in matrix
-        DLXNode[] nodes = makeRNodeList(6);
-        for (int x = 0; x < nodes.length; x++) {
-          nodes[x].C = headNodes[x]; // Connect to head
-          connectNodeWithLastInRow(nodes[x]); // Vertical connect
-        }
-      }
-      for (int j = 1; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
-        places[j] = places[j] + 3;
-      }
-
-    }
-  }
-
-  static void addMirroredZtoMatrix() {
-
-    int[] places = {2, 3, 4, 9, 9, 14, 15};
-
-    for (int i = 0; i < n - 2; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
-      for (int k = 0; k < 3; k++) { //immer 3 pro Zeile
-        if (k != 0) {
-          for (int j = 1; j < places.length; j++) { //Plätze verschieben
-            places[j]++;
-          }
-        }
-        printMatrixRow(places);
-        //System.out.println(Arrays.toString(places));
-        // Nodes in matrix
-        DLXNode[] nodes = makeRNodeList(6);
-        for (int x = 0; x < nodes.length; x++) {
-          nodes[x].C = headNodes[x]; // Connect to head
-          connectNodeWithLastInRow(nodes[x]); // Vertical connect
-        }
-      }
-      for (int j = 1; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
-        places[j] = places[j] + 3;
-      }
-
-    }
-  }
-
-
-
-
 
   static void printMatrixRow(int[] heads) {
-    StringBuilder print = new StringBuilder("----");
-    for (int i = 0; i < (n*14); i++) {
-      print.append("-");
+    StringBuilder print = new StringBuilder("");
+    for (int i = 0; i < (n * 5); i++) {
+      print.append("---");
     }
+    print = print.delete(print.length() - 1, print.length());
 
     switch (heads[0]) {
       case 0:
@@ -237,7 +145,7 @@ public class DLXPentominoNUZ {
 
 
     if (print.length() > 80) {
-      print = print.delete(80, print.length());
+      //print = print.delete(80, print.length());
     }
     System.out.println(print);
    }
