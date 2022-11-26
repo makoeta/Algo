@@ -17,23 +17,20 @@ public class DLXPentominoNUZ {
       System.out.println(e.getMessage());
     }
 
-    n = 10;
+    n = 9;
 
     headNodes = new DLXNode[3 + n * 5];
 
-    /**
-     * Matrix-Spalten für Formen:
-     * N U Z
-     */
+
     for (int i = 0; i < headNodes.length; i++) { // 3 Spalten für Formen + 8 für Breitde des Spielfeldes
       DLXNode headerNode = new DLXNode();
       headNodes[i] = headerNode;
       if (i > 0) {
-        verticalConnect(headNodes[i -1], headerNode);
+        verticalConnect(headNodes[i - 1], headerNode);
       }
     }
+    verticalConnect(headNodes[headNodes.length - 1], head);
     verticalConnect(head, headNodes[0]);
-    verticalConnect(headNodes[7], head); // Kreis
     System.out.print("U-N-Z");
 
     for (int i = 1; i < n + 1; i++) {
@@ -49,7 +46,9 @@ public class DLXPentominoNUZ {
     addFigureToMatrix(new int[]{1, 3, 8, 13, 14, 19}, 2, 4); // mirrored & flipped N
 
     addFigureToMatrix(new int[]{2, 4, 5, 9, 13, 14}, 3, 3); // Z
-    addFigureToMatrix(new int[]{2, 3, 4, 9, 14, 15}, 3, 3); // mirrored Z*/
+    addFigureToMatrix(new int[]{2, 3, 4, 9, 14, 15}, 3, 3); // mirrored Z
+    addFigureToMatrix(new int[]{2, 3, 8, 9, 10, 15}, 3, 3); // Z counterclockwise
+    addFigureToMatrix(new int[]{2, 5, 8, 9, 10, 13}, 3, 3); // Z clockwise
 
     DLX.h = head;
     DLX.search(0);

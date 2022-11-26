@@ -17,9 +17,12 @@ public class DLX {
    *
    */
   public static void search (int k){ // finds & counts solutions
-    System.out.print(".");
     cnt = 0;
-    if (h.R == h) {cnt++; return;}     // if empty: count & done
+    if (h.R == h) {
+      cnt++;
+      System.out.println(":)");
+      return;
+    }     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
     cover(c);                          // remove c from columns
     for (DLXNode r=c.D; r!=c; r=r.D){  // forall rows with 1 in c
