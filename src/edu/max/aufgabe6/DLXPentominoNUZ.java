@@ -19,7 +19,7 @@ public class DLXPentominoNUZ {
 
     n = 7;
 
-    headNodes = new DLXNode[3 + n * 5];
+    headNodes = new DLXNode[n * 5];
 
 
     for (int i = 0; i < headNodes.length; i++) { // 3 Spalten für Formen + 8 für Breitde des Spielfeldes
@@ -33,39 +33,43 @@ public class DLXPentominoNUZ {
     verticalConnect(head, headNodes[0]);
 
     // Kopfzeile der Tabelle
-    System.out.print("U-N-Z");
+    StringBuilder headerPrint = new StringBuilder("");
     for (int i = 1; i < 6; i++) {
       for (int j = 1; j < n + 1; j++) {
-        System.out.print("-" + i + j);
+        headerPrint.append("-" + i + j);
       }
     }
-    System.out.println();
-    System.out.println("U");
-    addFigureToMatrix(new int[]{0, 3, 5, (3 + n), (3 + n) + 1, (3 + n) + 2}, 3, 2); // U
-    System.out.println("Flipped U");
-    addFigureToMatrix(new int[]{0, 3, 4, 5, (3 + n), (3 + n) + 2}, 3, 2); // flipped U
+    System.out.println(headerPrint.substring(1));
 
-    System.out.println("N");
-    addFigureToMatrix(new int[]{1, 3, (3 + n), (3 + n) + 1, (3 + (n * 2)) + 1, (3 + (n * 3)) + 1}, 2, 4); // N
-    System.out.println("Mirrored N");
-    addFigureToMatrix(new int[]{1, 4, (3 + n), (3 + n), (3 + (n * 2)), (3 + (n * 3))}, 2, 4); // mirrored N
+
+    System.out.println("Mirrored & Flipped N");
+    addFigureToMatrix(new int[]{1, (n) + 1, ((n * 2)), ((n * 2)) + 1, ((n * 3))}, 2, 4); // flipped N
     System.out.println("Flipped N");
-    addFigureToMatrix(new int[]{1, 4, (3 + n) + 1, (3 + (n * 2)), (3 + (n * 2)) + 1, (3 + (n * 3))}, 2, 4); // flipped N
-    System.out.println("Mirrored & flipped N");
-    addFigureToMatrix(new int[]{1, 3, (3 + n), (3 + (n * 2)), (3 + (n * 2)) + 1, (3 + (n * 3))}, 2, 4); // mirrored & flipped N
+    addFigureToMatrix(new int[]{0, (n), ((n * 2)), ((n * 2)) + 1, ((n * 3) + 1)}, 2, 4); // mirrored & flipped N
+    System.out.println("N");
+    addFigureToMatrix(new int[]{0, (n), (n) + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
+    System.out.println("Mirrored N");
+    addFigureToMatrix(new int[]{1, (n), (n) + 1, ((n * 2)), ((n * 3))}, 2, 4); // mirrored N
+
+    System.out.println("U");
+    addFigureToMatrix(new int[]{0, 2, (n), (n) + 1, (n) + 2}, 3, 2); // U
+    System.out.println("Flipped U");
+    addFigureToMatrix(new int[]{0, 1, 2, (n), (n) + 2}, 3, 2); // flipped U
+
+    //TODO: gedrehte Us
 
     System.out.println("Z");
-    addFigureToMatrix(new int[]{2, 4, 5, (3 + n) + 1, (3 + (n * 2)), (3 + (n * 2)) + 1}, 3, 3); // Z
+    addFigureToMatrix(new int[]{1, 2, (n) + 1, ((n * 2)), ((n * 2)) + 1}, 3, 3); // Z
     System.out.println("Mirrored Z");
-    addFigureToMatrix(new int[]{2, 3, 4, (3 + n) + 1, (3 + (n * 2)) + 1, (3 + (n * 2)) + 2}, 3, 3); // mirrored Z
+    addFigureToMatrix(new int[]{0, 1, (n) + 1, ((n * 2)) + 1, ((n * 2)) + 2}, 3, 3); // mirrored Z
     System.out.println("Z counterclockwise");
-    addFigureToMatrix(new int[]{2, 3, (3 + n), (3 + n) + 1, (3 + n) + 2, (3 + (n * 2)) + 2}, 3, 3); // Z counterclockwise
+    addFigureToMatrix(new int[]{0, (n), (n) + 1, (n) + 2, ((n * 2)) + 2}, 3, 3); // Z counterclockwise
     System.out.println("Z clockwise");
-    addFigureToMatrix(new int[]{2, 5, (3 + n), (3 + n) + 1, (3 + n) + 2, (3 + (n * 2))}, 3, 3); // Z clockwise
+    addFigureToMatrix(new int[]{2, (n), (n) + 1, (n) + 2, ((n * 2))}, 3, 3); // Z clockwise
 
     DLX.h = head;
     DLX.search(0);
-    System.out.println("\nSol.: " + DLX.cnt);
+    System.out.println("\nSol.: " + DLX.sol);
   }
 
   static DLXNode getLowestNode(DLXNode node) {
@@ -88,7 +92,7 @@ public class DLXPentominoNUZ {
   }
 
   static DLXNode[] makeRNodeList() {
-    DLXNode[] out = new DLXNode[6];
+    DLXNode[] out = new DLXNode[5];
 
     for (int i = 0; i < out.length; i++) {
       out[i] = new DLXNode();
@@ -98,8 +102,7 @@ public class DLXPentominoNUZ {
     verticalConnect(out[1], out[2]);
     verticalConnect(out[2], out[3]);
     verticalConnect(out[3], out[4]);
-    verticalConnect(out[4], out[5]);
-    verticalConnect(out[5], out[0]);
+    verticalConnect(out[4], out[0]);
 
     return out;
   }
@@ -109,7 +112,7 @@ public class DLXPentominoNUZ {
     for (int i = 0; i < (5 - height) + 1; i++) { // Zeilen Iteration -> drei Möglichen pro Doppelspalte
       for (int k = 0; k < n - width + 1; k++) { //immer 3 pro Zeile
         if (k != 0) {
-          for (int j = 1; j < places.length; j++) { //Plätze verschieben
+          for (int j = 0; j < places.length; j++) { //Plätze verschieben
             places[j]++;
           }
         }
@@ -121,7 +124,7 @@ public class DLXPentominoNUZ {
           connectNodeWithLastInRow(nodes[x]); // Vertical connect
         }
       }
-      for (int j = 1; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
+      for (int j = 0; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
         places[j] = places[j] + width;
       }
 
@@ -135,24 +138,12 @@ public class DLXPentominoNUZ {
     }
     print = print.delete(print.length() - 1, print.length());
 
-    switch (heads[0]) {
-      case 0:
-        print.replace(0, 0, "X");
-        break;
-      case 1:
-        print.replace(2, 2, "X");
-        break;
-      case 2:
-        print.replace(4, 4,"X");
-        break;
+
+    for (int i = 0; i < heads.length; i++) {
+      print.replace(((heads[i])  * 3), ((heads[i])  * 3) + 1, "XX");
     }
 
-
-    for (int i = 1; i < heads.length; i++) {
-      print.replace(((heads[i])  * 3) - 3, ((heads[i])  * 3) - 2, "XX");
-    }
-
-    System.out.println(print);
+    System.out.println(print.substring(0, print.length() - 5));
    }
 
 }
