@@ -17,7 +17,7 @@ public class DLXPentominoNUZ {
       System.out.println(e.getMessage());
     }
 
-    n = 17;
+    n = 7;
 
     headNodes = new DLXNode[n * 5];
 
@@ -33,7 +33,7 @@ public class DLXPentominoNUZ {
     verticalConnect(head, headNodes[0]);
 
     // Kopfzeile der Tabelle
-    StringBuilder headerPrint = new StringBuilder("");
+    StringBuilder headerPrint = new StringBuilder();
     for (int i = 1; i < 6; i++) {
       for (int j = 1; j < n + 1; j++) {
         headerPrint.append("-" + i + Integer.toHexString(j));
@@ -43,13 +43,13 @@ public class DLXPentominoNUZ {
 
 
     //System.out.println("Mirrored & Flipped N");
-    addFigureToMatrix(new int[]{1, (n) + 1, ((n * 2)), ((n * 2)) + 1, ((n * 3))}, 2, 4); // flipped N
+    addFigureToMatrix(new int[]{1, n + 1, n * 2, (n * 2) + 1, n * 3}, 2, 4); // flipped N
     //System.out.println("Flipped N");
-    addFigureToMatrix(new int[]{0, (n), ((n * 2)), ((n * 2)) + 1, ((n * 3) + 1)}, 2, 4); // mirrored & flipped N
+    addFigureToMatrix(new int[]{0, (n), n * 2, n * 2 + 1, (n * 3) + 1}, 2, 4); // mirrored & flipped N
     //System.out.println("N");
-    addFigureToMatrix(new int[]{0, (n), (n) + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
+    addFigureToMatrix(new int[]{0, n, n + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
     //System.out.println("Mirrored N");
-    addFigureToMatrix(new int[]{1, (n), (n) + 1, ((n * 2)), ((n * 3))}, 2, 4); // mirrored N
+    addFigureToMatrix(new int[]{1, n, n + 1, n * 2, n * 3}, 2, 4); // mirrored N
     //System.out.println("N clockwise");
     addFigureToMatrix(new int[]{2, 3, n, n + 1, n + 2}, 4, 2);
     //System.out.println("N clockwise mirrored");
@@ -60,22 +60,22 @@ public class DLXPentominoNUZ {
     addFigureToMatrix(new int[]{0, 1, 2, n + 2, n + 3}, 4, 2);
 
     //System.out.println("U");
-    addFigureToMatrix(new int[]{0, 2, (n), (n) + 1, (n) + 2}, 3, 2); // U
+    addFigureToMatrix(new int[]{0, 2, n, n + 1, n + 2}, 3, 2); // U
     //System.out.println("Flipped U");
-    addFigureToMatrix(new int[]{0, 1, 2, (n), (n) + 2}, 3, 2); // flipped U
+    addFigureToMatrix(new int[]{0, 1, 2, n, n + 2}, 3, 2); // flipped U
     //System.out.println("U clockwise");
-    addFigureToMatrix(new int[]{0, 1, n, (n * 2), (n * 2) + 1}, 2, 3);
+    addFigureToMatrix(new int[]{0, 1, n, n * 2, (n * 2) + 1}, 2, 3);
     //System.out.println("U counterclockwise");
-    addFigureToMatrix(new int[]{0, 1, n + 1, (n * 2), (n * 2) + 1}, 2, 3);
+    addFigureToMatrix(new int[]{0, 1, n + 1, n * 2, (n * 2) + 1}, 2, 3);
 
     //System.out.println("Z");
-    addFigureToMatrix(new int[]{1, 2, (n) + 1, ((n * 2)), ((n * 2)) + 1}, 3, 3); // Z
+    addFigureToMatrix(new int[]{1, 2, n + 1, n * 2, (n * 2) + 1}, 3, 3); // Z
     //System.out.println("Mirrored Z");
-    addFigureToMatrix(new int[]{0, 1, (n) + 1, ((n * 2)) + 1, ((n * 2)) + 2}, 3, 3); // mirrored Z
+    addFigureToMatrix(new int[]{0, 1, n + 1, (n * 2) + 1, (n * 2) + 2}, 3, 3); // mirrored Z
     //System.out.println("Z counterclockwise");
-    addFigureToMatrix(new int[]{0, (n), (n) + 1, (n) + 2, ((n * 2)) + 2}, 3, 3); // Z counterclockwise
+    addFigureToMatrix(new int[]{0, n, n + 1, n + 2, (n * 2) + 2}, 3, 3); // Z counterclockwise
     //System.out.println("Z clockwise");
-    addFigureToMatrix(new int[]{2, (n), (n) + 1, (n) + 2, ((n * 2))}, 3, 3); // Z clockwise
+    addFigureToMatrix(new int[]{2, n, n + 1, n + 2, n * 2}, 3, 3); // Z clockwise
 
     DLX.h = head;
     DLX.search(0);
