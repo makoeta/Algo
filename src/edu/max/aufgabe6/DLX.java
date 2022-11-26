@@ -17,7 +17,7 @@ public class DLX {
    *
    */
   public static void search (int k){ // finds & counts solutions
-    System.out.println(k);
+    System.out.print(".");
     cnt = 0;
     if (h.R == h) {cnt++; return;}     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
