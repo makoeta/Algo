@@ -21,7 +21,7 @@ public class DLX {
     if (h.R == h) {
       cnt++;
       sol++;
-      System.out.println(":)");
+      System.out.println(sol);
       return;
     }     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
