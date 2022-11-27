@@ -14,42 +14,41 @@ public class DLXPentominoNUZ {
   /**
    * Main method.
    *
-   * @param args args[0] = n
+   * @param args n
    */
   public static void main(String[] args) {
-
-    n = 0;
-
     try {
-      n = Integer.parseInt(args[0]);
+      for (String s:
+      args) {
+        n = Integer.parseInt(s);
+        foo();
+      }
     } catch (Exception e) {
       System.out.println(e.getMessage());
     }
+  }
 
-    n = 7;
-
+  public static void foo() {
     headNodes = new DLXNode[n * 5];
-
 
     for (int i = 0; i < headNodes.length; i++) { // generiert head nodes
       DLXNode headerNode = new DLXNode();
       headNodes[i] = headerNode;
       if (i > 0) {
-        verticalConnect(headNodes[i - 1], headerNode);
+        horizontalConnect(headNodes[i - 1], headerNode);
       }
     }
-    verticalConnect(headNodes[headNodes.length - 1], head);
-    verticalConnect(head, headNodes[0]);
+    horizontalConnect(headNodes[headNodes.length - 1], head);
+    horizontalConnect(head, headNodes[0]);
 
     // Kopfzeile der Tabelle
-    StringBuilder headerPrint = new StringBuilder();
+    /*StringBuilder headerPrint = new StringBuilder();
     for (int i = 1; i < 6; i++) {
       for (int j = 1; j < n + 1; j++) {
         headerPrint.append("-" + i + Integer.toHexString(j));
       }
     }
-    System.out.println(headerPrint.substring(1));
-
+    System.out.println(headerPrint.substring(1));*/
 
     //System.out.println("Mirrored & Flipped N");
     addFigureToMatrix(new int[]{1, n + 1, n * 2, (n * 2) + 1, n * 3},
@@ -89,8 +88,9 @@ public class DLXPentominoNUZ {
     addFigureToMatrix(new int[]{2, n, n + 1, n + 2, n * 2}, 3, 3); // Z clockwise
 
     DLX.h = head;
+    DLX.sol = 0;
     DLX.search(0);
-    System.out.println("\nSol.: " + DLX.sol);
+    System.out.println("\na(" + n + ") = " + DLX.sol);
   }
 
   static DLXNode getLowestNode(DLXNode node) {
@@ -99,16 +99,16 @@ public class DLXPentominoNUZ {
 
   static void connectNodeWithLastInRow(DLXNode newLowestNode) {
     //unter die bisher letzte Node hängen
-    horizontalConnect(getLowestNode(newLowestNode.C), newLowestNode);
-    horizontalConnect(newLowestNode, newLowestNode.C); // "Überschuss" zu head
+    verticalConnect(getLowestNode(newLowestNode.C), newLowestNode);
+    verticalConnect(newLowestNode, newLowestNode.C); // "Überschuss" zu head
   }
 
-  static void verticalConnect(DLXNode left, DLXNode right) {
+  static void horizontalConnect(DLXNode left, DLXNode right) {
     left.R = right;
     right.L = left;
   }
 
-  static void horizontalConnect(DLXNode up, DLXNode down) {
+  static void verticalConnect(DLXNode up, DLXNode down) {
     up.D = down;
     down.U = up;
   }
@@ -120,11 +120,11 @@ public class DLXPentominoNUZ {
       out[i] = new DLXNode();
     }
 
-    verticalConnect(out[0], out[1]);
-    verticalConnect(out[1], out[2]);
-    verticalConnect(out[2], out[3]);
-    verticalConnect(out[3], out[4]);
-    verticalConnect(out[4], out[0]);
+    horizontalConnect(out[0], out[1]);
+    horizontalConnect(out[1], out[2]);
+    horizontalConnect(out[2], out[3]);
+    horizontalConnect(out[3], out[4]);
+    horizontalConnect(out[4], out[0]);
 
     return out;
   }
@@ -138,7 +138,7 @@ public class DLXPentominoNUZ {
             places[j]++;
           }
         }
-        printMatrixRow(places);
+        //printMatrixRow(places);
         // Nodes in matrix
         DLXNode[] nodes = makernodelist();
         for (int x = 0; x < nodes.length; x++) {
@@ -167,5 +167,4 @@ public class DLXPentominoNUZ {
 
     System.out.println(print.substring(0, print.length() - 5));
   }
-
 }

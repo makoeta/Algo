@@ -16,12 +16,18 @@ public class DLX {
    * @param k: number of level
    *
    */
-  public static void search (int k){ // finds & counts solutions
+  public static void search (int k) { // finds & counts solutions
     int cnt = 0;
     if (h.R == h) {
       cnt++;
       sol++;
-      System.out.println(sol);
+
+      if (sol % 50 == 0) {
+        System.out.print("/");
+      } else if (sol % 10 == 0) {
+        System.out.print(".");
+      }
+
       return;
     }     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
