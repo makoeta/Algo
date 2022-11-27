@@ -11,16 +11,25 @@ public class DLXPentominoNUZ {
   static int n;
   static DLXNode[] headNodes;
 
+
+
+  static String blankLine;
+  static boolean printMatrix = false;
+
   /**
    * Main method.
    *
    * @param args n
    */
   public static void main(String[] args) {
+
+    if (args.length == 1) printMatrix = true; // bei einer Zahl wird die Matrix geprintet
+
     try {
       for (String s:
       args) {
         n = Integer.parseInt(s);
+        if (n < 0) n = n * -1;
         foo();
       }
     } catch (Exception e) {
@@ -41,56 +50,65 @@ public class DLXPentominoNUZ {
     horizontalConnect(headNodes[headNodes.length - 1], head);
     horizontalConnect(head, headNodes[0]);
 
-    // Kopfzeile der Tabelle
-    /*StringBuilder headerPrint = new StringBuilder();
-    for (int i = 1; i < 6; i++) {
-      for (int j = 1; j < n + 1; j++) {
-        headerPrint.append("-" + i + Integer.toHexString(j));
+
+    if (printMatrix) {
+      // Kopfzeile der Tabelle
+      StringBuilder headerPrint = new StringBuilder();
+      for (int i = 1; i < 6; i++) {
+        headerPrint.append("- ".repeat(n));
+        headerPrint.append("|");
       }
+      blankLine = headerPrint.delete(headerPrint.length() - 1, headerPrint.length()).toString();
+      System.out.print(blankLine);
     }
-    System.out.println(headerPrint.substring(1));*/
 
-    //System.out.println("Mirrored & Flipped N");
-    addFigureToMatrix(new int[]{1, n + 1, n * 2, (n * 2) + 1, n * 3},
-        2, 4); //flipped N
-    //System.out.println("Flipped N");
-    addFigureToMatrix(new int[]{0, (n), n * 2, n * 2 + 1, (n * 3) + 1},
-        2, 4); // mirrored & flipped N
-    //System.out.println("N");
-    addFigureToMatrix(new int[]{0, n, n + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
-    //System.out.println("Mirrored N");
-    addFigureToMatrix(new int[]{1, n, n + 1, n * 2, n * 3}, 2, 4); // mirrored N
-    //System.out.println("N clockwise");
-    addFigureToMatrix(new int[]{2, 3, n, n + 1, n + 2}, 4, 2);
-    //System.out.println("N clockwise mirrored");
-    addFigureToMatrix(new int[]{0, 1, n + 1, n + 2, n + 3}, 4, 2);
-    //System.out.println("N counterclockwise");
-    addFigureToMatrix(new int[]{1, 2, 3, n, n + 1}, 4, 2);
-    //System.out.println("N counterclockwise mirrored");
-    addFigureToMatrix(new int[]{0, 1, 2, n + 2, n + 3}, 4, 2);
 
-    //System.out.println("U");
+    if (printMatrix) System.out.print(">> U");
     addFigureToMatrix(new int[]{0, 2, n, n + 1, n + 2}, 3, 2); // U
-    //System.out.println("Flipped U");
+    if (printMatrix) System.out.print(">> Flipped U");
     addFigureToMatrix(new int[]{0, 1, 2, n, n + 2}, 3, 2); // flipped U
-    //System.out.println("U clockwise");
+    if (printMatrix) System.out.print(">> U clockwise");
     addFigureToMatrix(new int[]{0, 1, n, n * 2, (n * 2) + 1}, 2, 3);
-    //System.out.println("U counterclockwise");
+    if (printMatrix) System.out.print(">> U counterclockwise");
     addFigureToMatrix(new int[]{0, 1, n + 1, n * 2, (n * 2) + 1}, 2, 3);
 
-    //System.out.println("Z");
+
+    if (printMatrix) System.out.print(">> N");
+    addFigureToMatrix(new int[]{0, n, n + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
+    if (printMatrix) System.out.print(">> Flipped N");
+    addFigureToMatrix(new int[]{0, (n), n * 2, n * 2 + 1, (n * 3) + 1},
+        2, 4); // mirrored & flipped N
+    if (printMatrix) System.out.print(">> Mirrored N");
+    addFigureToMatrix(new int[]{1, n, n + 1, n * 2, n * 3}, 2, 4); // mirrored N
+    if (printMatrix) System.out.print(">> Mirrored & Flipped N");
+    addFigureToMatrix(new int[]{1, n + 1, n * 2, (n * 2) + 1, n * 3},
+        2, 4); //flipped N
+    if (printMatrix) System.out.print(">> N clockwise");
+    addFigureToMatrix(new int[]{2, 3, n, n + 1, n + 2}, 4, 2);
+    if (printMatrix) System.out.print(">> N clockwise mirrored");
+    addFigureToMatrix(new int[]{0, 1, n + 1, n + 2, n + 3}, 4, 2);
+    if (printMatrix) System.out.print(">> N counterclockwise");
+    addFigureToMatrix(new int[]{1, 2, 3, n, n + 1}, 4, 2);
+    if (printMatrix) System.out.print(">> N counterclockwise mirrored");
+    addFigureToMatrix(new int[]{0, 1, 2, n + 2, n + 3}, 4, 2);
+
+
+    if (printMatrix) System.out.print(">> Z");
     addFigureToMatrix(new int[]{1, 2, n + 1, n * 2, (n * 2) + 1}, 3, 3); // Z
-    //System.out.println("Mirrored Z");
+    if (printMatrix) System.out.print(">> Mirrored Z");
     addFigureToMatrix(new int[]{0, 1, n + 1, (n * 2) + 1, (n * 2) + 2}, 3, 3); // mirrored Z
-    //System.out.println("Z counterclockwise");
+    if (printMatrix) System.out.print(">> Z counterclockwise");
     addFigureToMatrix(new int[]{0, n, n + 1, n + 2, (n * 2) + 2}, 3, 3); // Z counterclockwise
-    //System.out.println("Z clockwise");
+    if (printMatrix) System.out.print(">> Z clockwise");
     addFigureToMatrix(new int[]{2, n, n + 1, n + 2, n * 2}, 3, 3); // Z clockwise
 
+    System.out.print("\nCalculating");
+
     DLX.h = head;
-    DLX.sol = 0;
+    DLX.cnt = 0;
     DLX.search(0);
-    System.out.println("\na(" + n + ") = " + DLX.sol);
+
+    System.out.println("\na(" + n + ") = " + DLX.cnt);
   }
 
   static DLXNode getLowestNode(DLXNode node) {
@@ -138,7 +156,7 @@ public class DLXPentominoNUZ {
             places[j]++;
           }
         }
-        //printMatrixRow(places);
+        if (printMatrix) printMatrixRow(places);
         // Nodes in matrix
         DLXNode[] nodes = makernodelist();
         for (int x = 0; x < nodes.length; x++) {
@@ -154,17 +172,13 @@ public class DLXPentominoNUZ {
   }
 
   static void printMatrixRow(int[] heads) {
-    StringBuilder print = new StringBuilder();
-    for (int i = 0; i < (n * 5); i++) {
-      print.append("---");
-    }
-    print = print.delete(print.length() - 1, print.length());
+    StringBuilder print = new StringBuilder(blankLine);
 
-
-    for (int i = 0; i < heads.length; i++) {
-      print.replace(((heads[i])  * 3), ((heads[i])  * 3) + 1, "XX");
+    for (int j : heads) {
+      int indent = j / n; //Anzahl der |
+      print.replace((j * 2) + indent, (j * 2) + indent + 1, "X");
     }
 
-    System.out.println(print.substring(0, print.length() - 5));
+    System.out.print("\n" + print);
   }
 }
