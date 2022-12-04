@@ -102,13 +102,14 @@ public class DLXPentominoNUZ {
     if (printMatrix) System.out.print(">> Z clockwise");
     addFigureToMatrix(new int[]{2, 5, 6, 7, 10}, 3, 3); // Z clockwise
 
-    System.out.print("\nCalculating");
+
+    System.out.print("n = " + n + "\nCalculating");
 
     DLX.h = head;
     DLX.cnt = 0;
     DLX.search(0);
-
     System.out.println("\na(" + n + ") = " + DLX.cnt);
+
   }
 
   static DLXNode getLowestNode(DLXNode node) {

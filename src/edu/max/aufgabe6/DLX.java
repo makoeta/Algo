@@ -19,13 +19,6 @@ public class DLX {
   public static void search (int k) { // finds & counts solutions
     if (h.R == h) {
       cnt++;
-      if (cnt % 100 == 0) {
-        System.out.print("|");
-      } else if (cnt % 50 == 0) {
-        System.out.print("/");
-      } else if (cnt % 10 == 0) {
-        System.out.print(".");
-      }
       return;
     }     // if empty: count & done
     DLXNode c = h.R;                   // choose next column c
