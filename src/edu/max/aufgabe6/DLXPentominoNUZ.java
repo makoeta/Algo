@@ -54,8 +54,8 @@ public class DLXPentominoNUZ {
     if (printMatrix) {
       // Kopfzeile der Tabelle
       StringBuilder headerPrint = new StringBuilder();
-      for (int i = 1; i < 6; i++) {
-        headerPrint.append("- ".repeat(n));
+      for (int i = 0; i < n; i++) {
+        headerPrint.append("- ".repeat(5));
         headerPrint.append("|");
       }
       blankLine = headerPrint.delete(headerPrint.length() - 1, headerPrint.length()).toString();
@@ -64,43 +64,43 @@ public class DLXPentominoNUZ {
 
 
     if (printMatrix) System.out.print(">> U");
-    addFigureToMatrix(new int[]{0, 2, n, n + 1, n + 2}, 3, 2); // U
+    addFigureToMatrix(new int[]{0, 2, 5, 6, 7}, 3, 2); // U
     if (printMatrix) System.out.print(">> Flipped U");
-    addFigureToMatrix(new int[]{0, 1, 2, n, n + 2}, 3, 2); // flipped U
+    addFigureToMatrix(new int[]{0, 1, 2, 5, 7}, 3, 2); // flipped U
     if (printMatrix) System.out.print(">> U clockwise");
-    addFigureToMatrix(new int[]{0, 1, n, n * 2, (n * 2) + 1}, 2, 3);
+    addFigureToMatrix(new int[]{0, 1, 5, 10, 11}, 2, 3);
     if (printMatrix) System.out.print(">> U counterclockwise");
-    addFigureToMatrix(new int[]{0, 1, n + 1, n * 2, (n * 2) + 1}, 2, 3);
+    addFigureToMatrix(new int[]{0, 1, 6, 10, 11}, 2, 3);
 
 
     if (printMatrix) System.out.print(">> N");
-    addFigureToMatrix(new int[]{0, n, n + 1, (n * 2) + 1, (n * 3) + 1}, 2, 4); // N
+    addFigureToMatrix(new int[]{0, 5, 6, 11, 16}, 2, 4); // N
     if (printMatrix) System.out.print(">> Flipped N");
-    addFigureToMatrix(new int[]{0, (n), n * 2, n * 2 + 1, (n * 3) + 1},
+    addFigureToMatrix(new int[]{0, 5, 10, 11, 16},
         2, 4); // mirrored & flipped N
     if (printMatrix) System.out.print(">> Mirrored N");
-    addFigureToMatrix(new int[]{1, n, n + 1, n * 2, n * 3}, 2, 4); // mirrored N
+    addFigureToMatrix(new int[]{1, 5, 6, 10, 15}, 2, 4); // mirrored N
     if (printMatrix) System.out.print(">> Mirrored & Flipped N");
-    addFigureToMatrix(new int[]{1, n + 1, n * 2, (n * 2) + 1, n * 3},
+    addFigureToMatrix(new int[]{1, 6, 10, 11, 15},
         2, 4); //flipped N
     if (printMatrix) System.out.print(">> N clockwise");
-    addFigureToMatrix(new int[]{2, 3, n, n + 1, n + 2}, 4, 2);
+    addFigureToMatrix(new int[]{2, 3, 5, 6, 7}, 4, 2);
     if (printMatrix) System.out.print(">> N clockwise mirrored");
-    addFigureToMatrix(new int[]{0, 1, n + 1, n + 2, n + 3}, 4, 2);
+    addFigureToMatrix(new int[]{0, 1, 6, 7, 8}, 4, 2);
     if (printMatrix) System.out.print(">> N counterclockwise");
-    addFigureToMatrix(new int[]{1, 2, 3, n, n + 1}, 4, 2);
+    addFigureToMatrix(new int[]{1, 2, 3, 5, 6}, 4, 2);
     if (printMatrix) System.out.print(">> N counterclockwise mirrored");
-    addFigureToMatrix(new int[]{0, 1, 2, n + 2, n + 3}, 4, 2);
+    addFigureToMatrix(new int[]{0, 1, 2, 7, 8}, 4, 2);
 
 
     if (printMatrix) System.out.print(">> Z");
-    addFigureToMatrix(new int[]{1, 2, n + 1, n * 2, (n * 2) + 1}, 3, 3); // Z
+    addFigureToMatrix(new int[]{1, 2, 6, 10, 11}, 3, 3); // Z
     if (printMatrix) System.out.print(">> Mirrored Z");
-    addFigureToMatrix(new int[]{0, 1, n + 1, (n * 2) + 1, (n * 2) + 2}, 3, 3); // mirrored Z
+    addFigureToMatrix(new int[]{0, 1, 6, 11, 12}, 3, 3); // mirrored Z
     if (printMatrix) System.out.print(">> Z counterclockwise");
-    addFigureToMatrix(new int[]{0, n, n + 1, n + 2, (n * 2) + 2}, 3, 3); // Z counterclockwise
+    addFigureToMatrix(new int[]{0, 5, 6, 7, 12}, 3, 3); // Z counterclockwise
     if (printMatrix) System.out.print(">> Z clockwise");
-    addFigureToMatrix(new int[]{2, n, n + 1, n + 2, n * 2}, 3, 3); // Z clockwise
+    addFigureToMatrix(new int[]{2, 5, 6, 7, 10}, 3, 3); // Z clockwise
 
     System.out.print("\nCalculating");
 
@@ -149,8 +149,9 @@ public class DLXPentominoNUZ {
 
   static void addFigureToMatrix(int[] places, int width, int height) {
 
-    for (int i = 0; i < (5 - height) + 1; i++) {
-      for (int k = 0; k < n - width + 1; k++) {
+    for (int i = 0; i < (n - height) + 1; i++) {
+      //System.out.println("Hier");
+      for (int k = 0; k < (5 - width) + 1; k++) { //reihe
         if (k != 0) {
           for (int j = 0; j < places.length; j++) { //Plätze verschieben
             places[j]++;
@@ -175,7 +176,7 @@ public class DLXPentominoNUZ {
     StringBuilder print = new StringBuilder(blankLine);
 
     for (int j : heads) {
-      int indent = j / n; //Anzahl der |
+      int indent = j / 5; //Anzahl der |
       print.replace((j * 2) + indent, (j * 2) + indent + 1, "X");
     }
 
