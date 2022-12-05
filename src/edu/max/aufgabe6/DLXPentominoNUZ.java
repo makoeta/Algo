@@ -3,16 +3,13 @@ package edu.max.aufgabe6;
 /**
  * Calculates the solutions for an 5xN field with the given pentimonos.
  *
- * @author Maximilian König
+ * @author Maximilian König, Jonas Gierlich, Tobias Bergtold
  */
 public class DLXPentominoNUZ {
 
   static DLXNode head = new DLXNode();
   static int n;
   static DLXNode[] headNodes;
-
-
-
   static String blankLine;
   static boolean printMatrix = false;
 
@@ -37,6 +34,9 @@ public class DLXPentominoNUZ {
     }
   }
 
+  /**
+   * Generates the matrix with all figures and then let the dlx algorithm calculate the solutions.
+   */
   public static void foo() {
     headNodes = new DLXNode[n * 5];
 
@@ -103,13 +103,13 @@ public class DLXPentominoNUZ {
     addFigureToMatrix(new int[]{2, 5, 6, 7, 10}, 3, 3); // Z clockwise
 
 
-    System.out.print("n = " + n + "\nCalculating");
+    System.out.print("\na(" + n + ") = ");
 
     DLX.h = head;
     DLX.cnt = 0;
     DLX.search(0);
-    System.out.println("\na(" + n + ") = " + DLX.cnt);
 
+    System.out.print(DLX.cnt);
   }
 
   static DLXNode getLowestNode(DLXNode node) {
@@ -148,35 +148,46 @@ public class DLXPentominoNUZ {
     return out;
   }
 
-  static void addFigureToMatrix(int[] places, int width, int height) {
+  /**
+   * Adds all possibilities of a figure to the matrix.
+   *
+   * @param rows first possibility to put the figure in the top left of the matrix.
+   * @param width width of the figure
+   * @param height height of the figure
+   */
+  static void addFigureToMatrix(int[] rows, int width, int height) {
 
     for (int i = 0; i < (n - height) + 1; i++) {
       //System.out.println("Hier");
       for (int k = 0; k < (5 - width) + 1; k++) { //reihe
         if (k != 0) {
-          for (int j = 0; j < places.length; j++) { //Plätze verschieben
-            places[j]++;
+          for (int j = 0; j < rows.length; j++) { //Plätze verschieben
+            rows[j]++;
           }
         }
-        if (printMatrix) printMatrixRow(places);
+        if (printMatrix) printMatrixRow(rows);
         // Nodes in matrix
         DLXNode[] nodes = makernodelist();
         for (int x = 0; x < nodes.length; x++) {
-          nodes[x].C = headNodes[places[x]]; // Connect to head
+          nodes[x].C = headNodes[rows[x]]; // Connect to head
           connectNodeWithLastInRow(nodes[x]); // Vertical connect
         }
       }
-      for (int j = 0; j < places.length; j++) { //Plätze verschieben hier um drei: neue Zeile
-        places[j] = places[j] + width;
+      for (int j = 0; j < rows.length; j++) { //Plätze verschieben hier um drei: neue Zeile
+        rows[j] = rows[j] + width;
       }
-
     }
   }
 
-  static void printMatrixRow(int[] heads) {
+  /**
+   * Prints a row with the given nodes in the console.
+   *
+   * @param rows where nodes exist
+   */
+  static void printMatrixRow(int[] rows) {
     StringBuilder print = new StringBuilder(blankLine);
 
-    for (int j : heads) {
+    for (int j : rows) {
       int indent = j / 5; //Anzahl der |
       print.replace((j * 2) + indent, (j * 2) + indent + 1, "X");
     }
